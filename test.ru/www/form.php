@@ -1,158 +1,118 @@
-<?php
-// Установки Smarty
-require_once('..\lib\Smarty\libs\Smarty.class.php');
-$smarty = new Smarty();
-$smarty->template_dir = '..\lib\Smarty\templates';
-$smarty->compile_dir = '..\lib\Smarty\templates_c';
-$smarty->config_dir = '..\lib\Smarty\configs';
-$smarty->cache_dir = '..\lib\Smarty\cache';
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-//переменные для подключения и создания базы данных
-$hostName = "localhost";        // имя сервера 
-$userName = "root";             // пользователь базы данных MySQL  
-$passWord = "";                 // пароль для доступа к серверу MySQL  
-$dbName = "test";               // название создаваемой базы данных 
-$tableName = "Form";			// имя таблицы в базе данных
-// массив с данными из формы
-$dataForm = array();
-// массив с информацией об ошибке
+п»ї<?php
+// РјР°СЃСЃРёРІ СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ РѕР± РѕС€РёР±РєРµ
 $formErrors = array();
-//переменные для базы
-$dataName2 = "";
-$dataEmail2 = "";
-$dataTelephone2 = "";
-$dataComment2 = "";
+//РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РІС‹РІРѕРґР° РѕС€РёР±РєРё РЅР° СЌРєСЂР°РЅ
+$formError = NULL;
 
- //условие по которому проверяется была ли нажата кнопка "Отправить" в форме
-if (isset($_POST['submit'])) {
-  $dataForm['telephone1'] = $_POST['telephone'];
-  $dataForm['comment1'] = $_POST['comment'];
-  $dataForm['email1'] = $_POST['email'];
-  $dataForm['name1'] = $_POST['name'];
-  $dataName2 = $dataForm['name1'];
-  $dataEmail2 = $dataForm['email1'];
-  $dataTelephone2 = $dataForm['telephone1'];
-  $dataComment2 = $dataForm['comment1'];
-  // условие по которому проверяется были ли введены данные в поля имя и емэил
-  if (empty($_POST['name']) && empty($_POST['email'])) {
-    $formErrors[] = "Вы не заполнили поле имя и E-mail";
-	formInput($smarty, $dataForm, $formErrors);
-    // условие по которому определяется были ли внесены данные в поле имя
-  } elseif (empty($_POST['name'])) {
-    $formErrors[] = "Вы не заполнили поле имя";
-	formInput($smarty, $dataForm, $formErrors);
-    // условие по которому определяется были ли внесены данные в поле емэил
-  } elseif (empty($_POST['email'])) {
-    $formErrors[] = "Вы не заполнили поле E-mail";
-	formInput($smarty, $dataForm, $formErrors);
-  } elseif (!empty($_POST['name']) && !empty($_POST['email'])) {
-    $formInput=0;
-    $message = sendMessage($dataForm);
-    // сохранение сообщения
-    logMessage($message);
-	addData ($hostName, $userName, $passWord, $dbName, $tableName,
-             $dataName2, $dataEmail2, $dataTelephone2, $dataComment2);
-  }
+/**
+ * Р¤СѓРЅРєС†РёСЏ РїРѕ РІРІРѕРґСѓ РґР°РЅРЅС‹С… РІ С„РѕСЂРјСѓ
+ * @param string РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅСЏ РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РІС‹РІРѕРґР° РѕС€РёР±РєРё РЅР° СЌРєСЂР°РЅ
+ * @param array РјР°СЃСЃРёРІ СЃ РѕС€РёР±РєР°РјРё
+ */
+function formInput($formError, $formErrors) {
+  global $dataForm;
+  global $smarty;
+  global $dataName2;
+  global $dataEmail2;
+  global $dataTelephone2;
+  global $dataComment2;
+  $formInput=1;
+  if (isset($_POST['submit'])) {
+    $dataForm['telephone1'] = $_POST['telephone'];
+    $dataForm['comment1'] = $_POST['comment'];
+    $dataForm['email1'] = $_POST['email'];
+    $dataForm['name1'] = $_POST['name'];
+    $dataName2 = $dataForm['name1'];
+    $dataEmail2 = $dataForm['email1'];
+    $dataTelephone2 = $dataForm['telephone1'];
+    $dataComment2 = $dataForm['comment1'];
+    //СѓСЃР»РѕРІРёРµ РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ Р±С‹Р»Р° Р»Рё РЅР°Р¶Р°С‚Р° РєРЅРѕРїРєР° "РћС‚РїСЂР°РІРёС‚СЊ" РІ С„РѕСЂРјРµ
+    if ($_POST['submit'] == 'РћС‚РїСЂР°РІРёС‚СЊ') {
+      // СѓСЃР»РѕРІРёРµ РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ Р±С‹Р»Рё Р»Рё РІРІРµРґРµРЅС‹ РґР°РЅРЅС‹Рµ РІ РїРѕР»СЏ РёРјСЏ Рё РµРјСЌРёР»
+      if (empty($_POST['name']) && empty($_POST['email'])) {
+        $formError = 1;
+        $formErrors[] = "Р’С‹ РЅРµ Р·Р°РїРѕР»РЅРёР»Рё РїРѕР»Рµ РёРјСЏ Рё E-mail";
+	  // СѓСЃР»РѕРІРёРµ РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ Р±С‹Р»Рё Р»Рё РІРЅРµСЃРµРЅС‹ РґР°РЅРЅС‹Рµ РІ РїРѕР»Рµ РёРјСЏ
+      } elseif (empty($_POST['name'])) {
+        $formError = 1;
+        $formErrors[] = "Р’С‹ РЅРµ Р·Р°РїРѕР»РЅРёР»Рё РїРѕР»Рµ РёРјСЏ";
+	  // СѓСЃР»РѕРІРёРµ РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ Р±С‹Р»Рё Р»Рё РІРЅРµСЃРµРЅС‹ РґР°РЅРЅС‹Рµ РІ РїРѕР»Рµ РµРјСЌРёР»
+      } elseif (empty($_POST['email'])) {
+        $formError = 1;
+	    $formErrors[] = "Р’С‹ РЅРµ Р·Р°РїРѕР»РЅРёР»Рё РїРѕР»Рµ E-mail";
+      } elseif (!empty($_POST['name']) && !empty($_POST['email'])) {
+        $formInput=0;
+        $message = sendMessage($dataForm);
+        // СЃРѕС…СЂР°РЅРµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ
+        logMessage($message);
+	    addData ();
+	  }
+    }
 } else {
   $dataForm['telephone1'] = "";
   $dataForm['comment1'] = "";
   $dataForm['email1'] = "";
   $dataForm['name1'] = "";
-  if (isset($_GET['page'])) {
-    if ($_GET['page'] == 'Заполнить форму') {
-      formInput($smarty, $dataForm, $formErrors);
-    } elseif ($_GET['page'] == 'Список сообщений') {
-      listData($smarty, $hostName, $userName, $passWord, $dbName, $tableName,
-                	$dataName2, $dataEmail2, $dataTelephone2, $dataComment2);
-    } 
-  } else {
-    mainForm($smarty);
-  }
 }
-
-/**
- * Функция по вводу данных в форму
- * @param string переменная шаблонизатора
- * @param array массив с данными
- * @param string вспомогательня переменная для вывода ошибки на экран
- * @param array массив с ошибками
- */
-function formInput($smarty, $dataForm, $formErrors) {
+if ($formInput == 1) {
   extract($dataForm, EXTR_SKIP);
   $smarty->assign("name1", $name1);
   $smarty->assign("email1", $email1);
   $smarty->assign("telephone1", $telephone1);
   $smarty->assign("comment1", $comment1);
+  $smarty->assign('formError', $formError);
   $smarty->assign('formErrors', $formErrors);
-  $smarty->display("form_tpl2.tpl");
+  $smarty->display("form.tpl");
 }
-
+}
 /**
- * Функция по добавлению записей в базу данных
- * @param string переменная шаблонизатора
- * @param string переменная с именем сервера
- * @param string переменная с именем пользователя базы данных
- * @param string переменная с паролем для доступа к серверу
- * @param string переменная с именем базы
- * @param string переменная с именем таблицы в базе
- * @param string переменная с данными из формы
- * @param string переменная с данными из формы
- * @param string переменная с данными из формы
- * @param string переменная с данными из формы
+ * Р¤СѓРЅРєС†РёСЏ РїРѕ РґРѕР±Р°РІР»РµРЅРёСЋ Р·Р°РїРёСЃРµР№ РІ Р±Р°Р·Сѓ РґР°РЅРЅС‹С…
  */
-function addData($hostName, $userName, $passWord, $dbName, $tableName, 
-                 $dataName2, $dataEmail2, $dataTelephone2, $dataComment2) {
-  // подключение к базе
-  try {
-    $DBH = new PDO("mysql:host=$hostName;dbname=$dbName", $userName, $passWord);
-    $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-    } catch (PDOException $e) {
-      // Создание новой базы(вызов функции), если попытка подключения не удалась
-      $e->createBase = newBase($hostName, $userName, $passWord, $dbName, $tableName);
-      $DBH = new PDO("mysql:host=$hostName;dbname=$dbName", $userName, $passWord);
-      $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-    }
-  // операция вставки данных в таблицу
+function addData() {
+  global $dataName2;
+  global $dataEmail2;
+  global $dataTelephone2;
+  global $dataComment2;
+  global $DBH;
+  global $tableName;
+  // РѕРїРµСЂР°С†РёСЏ РІСЃС‚Р°РІРєРё РґР°РЅРЅС‹С… РІ С‚Р°Р±Р»РёС†Сѓ
   $sql = "INSERT INTO $tableName VALUES (:name, :email, :telephone, :comment)";
-  //подготовка шаблона для вставки в таблицу
+  //РїРѕРґРіРѕС‚РѕРІРєР° С€Р°Р±Р»РѕРЅР° РґР»СЏ РІСЃС‚Р°РІРєРё РІ С‚Р°Р±Р»РёС†Сѓ
   $STH = $DBH->prepare($sql);
-  // вставка данных в таблицу
+  // РІСЃС‚Р°РІРєР° РґР°РЅРЅС‹С… РІ С‚Р°Р±Р»РёС†Сѓ
   $STH->execute(array(':name'=>$dataName2,
                       ':email'=>$dataEmail2,
 					  ':telephone'=>$dataTelephone2,
 					  ':comment'=>$dataComment2));
-  //отключииться от базы
+  //РѕС‚РєР»СЋС‡РёРёС‚СЊСЃСЏ РѕС‚ Р±Р°Р·С‹
   $DBH = NULL;
 }
 
 /**
- * Функция для отправки сообщения
- * @param array массив с данными
- * @return string переменная с данными из массива
+ * Р¤СѓРЅРєС†РёСЏ РґР»СЏ РѕС‚РїСЂР°РІРєРё СЃРѕРѕР±С‰РµРЅРёСЏ
+ * @param array РјР°СЃСЃРёРІ СЃ РґР°РЅРЅС‹РјРё
+ * @return string РїРµСЂРµРјРµРЅРЅР°СЏ СЃ РґР°РЅРЅС‹РјРё РёР· РјР°СЃСЃРёРІР°
  */
 function sendMessage($dataForm) {
   extract($dataForm, EXTR_SKIP);
-  $message = "\r\n"."Имя:".$name1."\r\n".
+  $message = "\r\n"."РРјСЏ:".$name1."\r\n".
              "Email:".$email1."\r\n".
-             "Телефон:".$telephone1."\r\n".
-		     "Комментарий:".$comment1."\r\n";
+             "РўРµР»РµС„РѕРЅ:".$telephone1."\r\n".
+		     "РљРѕРјРјРµРЅС‚Р°СЂРёР№:".$comment1."\r\n";
   $headers = 'From: ' . $name1 . $email1 . "\r\n";
   $result = mail ('buravtsev_aa@ro78.fss.ru' , "Letter" , $message , $headers);
   if ($result) {
     echo $name1; 
-    echo ", данные успешно отправлены.";
+    echo ", РґР°РЅРЅС‹Рµ СѓСЃРїРµС€РЅРѕ РѕС‚РїСЂР°РІР»РµРЅС‹.";
   } else {
-    echo "Данные не отправлены.";
+    echo "Р”Р°РЅРЅС‹Рµ РЅРµ РѕС‚РїСЂР°РІР»РµРЅС‹.";
   }
   return $message;
 }
 
 /**
- * Функция по отправке логов
- * @param string переменная с данными из массива
+ * Р¤СѓРЅРєС†РёСЏ РїРѕ РѕС‚РїСЂР°РІРєРµ Р»РѕРіРѕРІ
+ * @param string РїРµСЂРµРјРµРЅРЅР°СЏ СЃ РґР°РЅРЅС‹РјРё РёР· РјР°СЃСЃРёРІР°
  */
 function logMessage($message) {
   $file = 'log.txt';
@@ -167,25 +127,4 @@ function logMessage($message) {
   }
 }
 
-/**
- * Функция по созданию новой базы данных
- * @param string переменная с именем сервера
- * @param string переменная с именем пользователя базы данных
- * @param string переменная с паролем для доступа к серверу
- * @param string переменная с именем создаваемой базы
- * @param string переменная с именем таблицы в базе
- */
-function newBase($hostName, $userName, $passWord, $dbName, $tableName) {
-  //создание базы
-  try {
-    $DBH = new PDO("mysql:host=$hostName", $userName, $passWord);
-    $DBH->exec("CREATE DATABASE `$dbName`;
-			USE `$dbName`;
-            CREATE table $tableName (`Name` text, `E-mail` text,
-			`Telephone` text, `Comment` text);");
-  } catch (PDOException $e) {
-    //вывод ошибки при исключении
-    die("DB ERROR: ". $e->getMessage());
-  }
-}
-?>
+

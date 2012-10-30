@@ -1,17 +1,17 @@
-<html>
+п»ї<html>
 <head>
   <meta charset="utf-8" />
-  <title>Просмотр данных</title>
+  <title>РџСЂРѕСЃРјРѕС‚СЂ РґР°РЅРЅС‹С…</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<h1>Просмотр данных</h1>
+<h1>РџСЂРѕСЃРјРѕС‚СЂ РґР°РЅРЅС‹С…</h1>
 <table>
    <tr align="center" bgcolor="#AAAAAACC">
-    <td colspan="3" style="font-size: 100%; font-family: sans-serif">Имя</td>
+    <td colspan="3" style="font-size: 100%; font-family: sans-serif">РРјСЏ</td>
 	<td colspan="3" style="font-size: 100%; font-family: sans-serif">E-mail</td>
-	<td colspan="3" style="font-size: 100%; font-family: sans-serif">Телефон</td>
-	<td colspan="3" style="font-size: 100%; font-family: sans-serif">Комментарии</td>
+	<td colspan="3" style="font-size: 100%; font-family: sans-serif">РўРµР»РµС„РѕРЅ</td>
+	<td colspan="3" style="font-size: 100%; font-family: sans-serif">РљРѕРјРјРµРЅС‚Р°СЂРёРё</td>
    </tr>
    <tr>
     <td colspan="3" style="font-size: 100%; font-family: sans-serif">{foreach $name as $key}

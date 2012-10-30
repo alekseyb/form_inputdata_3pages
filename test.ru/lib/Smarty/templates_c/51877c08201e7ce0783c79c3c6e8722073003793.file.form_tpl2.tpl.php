@@ -1,22 +1,20 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2012-10-23 15:51:36
-         compiled from "..\lib\Smarty\templates\form_tpl2.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:6543505c0f452b0f73-02584546%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.1.11, created on 2012-10-23 15:54:19
+         compiled from ".\templates\form_tpl2.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:239215086856b514492-17006539%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    'f11801c77f10c9df469284b5f688a17f594ffff1' => 
+    '51877c08201e7ce0783c79c3c6e8722073003793' => 
     array (
-      0 => '..\\lib\\Smarty\\templates\\form_tpl2.tpl',
+      0 => '.\\templates\\form_tpl2.tpl',
       1 => 1350993060,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '6543505c0f452b0f73-02584546',
+  'nocache_hash' => '239215086856b514492-17006539',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_505c0f45381786_49285464',
   'variables' => 
   array (
     'formErrors' => 0,
@@ -27,8 +25,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'comment1' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_5086856b622d42_82302681',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_505c0f45381786_49285464')) {function content_505c0f45381786_49285464($_smarty_tpl) {?>﻿<html>
+<?php if ($_valid && !is_callable('content_5086856b622d42_82302681')) {function content_5086856b622d42_82302681($_smarty_tpl) {?>﻿<html>
 <head>
   <meta charset="utf-8" />
   <title>Форма обратной связи</title>

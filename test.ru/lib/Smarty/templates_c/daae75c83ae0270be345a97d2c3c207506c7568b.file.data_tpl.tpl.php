@@ -1,22 +1,20 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2012-10-23 15:51:25
-         compiled from "..\lib\Smarty\templates\data_tpl.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:37535073fe95cdd792-51862349%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.1.11, created on 2012-10-23 15:54:16
+         compiled from ".\templates\data_tpl.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:161525086856820d3a7-21418201%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '8fceef22de4240bfbda79ee7f960f658d155e954' => 
+    'daae75c83ae0270be345a97d2c3c207506c7568b' => 
     array (
-      0 => '..\\lib\\Smarty\\templates\\data_tpl.tpl',
+      0 => '.\\templates\\data_tpl.tpl',
       1 => 1350993076,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '37535073fe95cdd792-51862349',
+  'nocache_hash' => '161525086856820d3a7-21418201',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_5073fe95d40e34_89372822',
   'variables' => 
   array (
     'name' => 0,
@@ -26,8 +24,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'comment' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_508685682f1ec0_28075137',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_5073fe95d40e34_89372822')) {function content_5073fe95d40e34_89372822($_smarty_tpl) {?>﻿<html>
+<?php if ($_valid && !is_callable('content_508685682f1ec0_28075137')) {function content_508685682f1ec0_28075137($_smarty_tpl) {?>﻿<html>
 <head>
   <meta charset="utf-8" />
   <title>Просмотр данных</title>

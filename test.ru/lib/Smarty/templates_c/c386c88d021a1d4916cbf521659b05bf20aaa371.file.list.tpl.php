@@ -1,22 +1,22 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2012-10-23 15:51:25
-         compiled from "..\lib\Smarty\templates\data_tpl.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:37535073fe95cdd792-51862349%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.1.11, created on 2012-10-30 10:26:22
+         compiled from ".\templates\list.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:2964250892bee99bff3-05921060%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '8fceef22de4240bfbda79ee7f960f658d155e954' => 
+    'c386c88d021a1d4916cbf521659b05bf20aaa371' => 
     array (
-      0 => '..\\lib\\Smarty\\templates\\data_tpl.tpl',
-      1 => 1350993076,
+      0 => '.\\templates\\list.tpl',
+      1 => 1350996676,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '37535073fe95cdd792-51862349',
+  'nocache_hash' => '2964250892bee99bff3-05921060',
   'function' => 
   array (
   ),
   'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_5073fe95d40e34_89372822',
+  'unifunc' => 'content_50892beee5b963_03984180',
   'variables' => 
   array (
     'name' => 0,
@@ -27,7 +27,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_5073fe95d40e34_89372822')) {function content_5073fe95d40e34_89372822($_smarty_tpl) {?>﻿<html>
+<?php if ($_valid && !is_callable('content_50892beee5b963_03984180')) {function content_50892beee5b963_03984180($_smarty_tpl) {?>﻿<html>
 <head>
   <meta charset="utf-8" />
   <title>Просмотр данных</title>
