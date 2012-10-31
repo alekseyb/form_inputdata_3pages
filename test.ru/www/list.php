@@ -14,10 +14,6 @@
  */
 function listData() {
   global $smarty;
-  global $dataName2;
-  global $dataEmail2;
-  global $dataTelephone2;
-  global $dataComment2;
   global $DBH;
   global $tableName;
   $rows = array();
@@ -26,30 +22,12 @@ function listData() {
   // устанавливаем режим выборки
   $STH->setFetchMode(PDO::FETCH_ASSOC);  
   // Вывод данных из таблицы на экран
-  $dataName [] = "";
-  $dataMail [] = "";
-  $dataTelephone [] = "";
-  $dataComment [] = "";
   while($row = $STH->fetch()) {  
-    $dataName [] = $row['Name'];
-	$dataMail [] = $row['E-mail'];
-	if ($row['Telephone'] == NULL) {
-	  $dataTelephone [] = "---";
-	} else{
-	  $dataTelephone [] = $row['Telephone'];
-	}
-	if ($row['Comment'] == NULL) {
-	  $dataComment [] = "---";
-	} else {
-	  $dataComment [] = $row['Comment'];
-	}
+    $rows[] = $row;
   }
   //отключииться от базы
   $DBH = NULL;
-  $smarty->assign("name", $dataName);
-  $smarty->assign("mail", $dataMail);
-  $smarty->assign("telephone", $dataTelephone);
-  $smarty->assign("comment", $dataComment);
+  $smarty->assign("list", $rows);
   $smarty->display("list.tpl");
 }  
 #$r = mysql_query ("DROP DATABASE $dbName");
